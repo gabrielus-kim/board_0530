@@ -15,10 +15,11 @@
         <a href='/delete/{{id}}'>delete</a>
         <h2>{{ title }}</h2>
         {{ content }}
-        <ol>
-            {{ menu | safe }}
-        </ol>
-
+        <form action='/join' method='POST'>
+            <p><input type='text' name='id' placeholder="User Id" autofocus required></p>
+            <p><input type='password' name='pw' placeholder="Password" required></p>
+            <p><input type='text' name='pf' placeholder="Your Profile" required></p>
+            <p><button type='submit'>join</button></p>
+        </form><p>
     </body>
-
 </html>
