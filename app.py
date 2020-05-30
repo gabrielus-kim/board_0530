@@ -125,18 +125,25 @@ def withdraw():
         return redirect('/')
     else:
         if request.method == 'POST':
-            cur=db.cursor()
-            cur.execute(f"""
-                delete from author where name = '{session['user']['name']}'
-            """)
-            session.pop('user',None)
-            db.commit()
-            return redirect('/')
-       
-
+            if request.form['subject'] ==  'YES':
+                cur=db.cursor()
+                cur.execute(f"""
+                    delete from author where name = '{session['user']['name']}'
+                """)
+                session.pop('user',None)
+                db.commit() 
+                title = '회원 탈퇴 요청이 처리되었읍니다.'
+            else:
+                title = '회원 탈퇴 요청을 반려하셨읍니다.'
+            return render_template('template.html',
+                                    user = who_am_i(),
+                                    menu = get_menu(),
+                                    title = title)
+        else:
+            title="정말 회원 탈퇴를 원하시나요?"
     return render_template('withdraw.html',
                             user=who_am_i(),
-                            title="정말 회원 탈퇴를 원하시나요?" )
+                            title=title )
 
 @app.route('/favicon.ico')
 def favicon():
